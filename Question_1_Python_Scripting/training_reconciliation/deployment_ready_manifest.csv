@@ -1,0 +1,3 @@
+asset_code,day_no,asset_type,filename,owner_email,tags
+A-004,18,csv,students.csv,ops@company.com,input|report
+A-001,24,css,main.css,mentor@company.com,static|style

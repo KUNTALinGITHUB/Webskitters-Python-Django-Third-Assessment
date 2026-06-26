@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Review Assets – Course Asset Review Panel</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner-ajax {
+      display: inline-block;
+      width: 14px; height: 14px;
+      border: 2px solid #495057;
+      border-top-color: #6ea8fe;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body class="bg-dark text-light min-vh-100 p-4">
+
+  <!-- Topbar -->
+  <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
+    <div>
+      <p class="text-uppercase text-secondary fw-bold mb-0" style="font-size: 0.7rem; letter-spacing: 0.12em;">
+        Course Asset Review Panel
+      </p>
+      <h1 class="h4 fw-bold text-white mb-0">Asset Manifest Review</h1>
+    </div>
+    <a href="{% url 'assetreview:clear_preview' %}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-upload me-1"></i> New Upload
+    </a>
+  </div>
+
+  <!-- Stat Cards -->
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-sm-3">
+      <div class="card bg-secondary-subtle border-secondary text-center py-3">
+        <div class="fs-3 fw-bold text-light">{{ counts.all }}</div>
+        <div class="text-uppercase text-secondary small" style="letter-spacing: 0.08em;">Total</div>
+      </div>
+    </div>
+    <div class="col-6 col-sm-3">
+      <div class="card bg-success-subtle border-success text-center py-3">
+        <div class="fs-3 fw-bold text-success">{{ counts.valid }}</div>
+        <div class="text-uppercase text-secondary small" style="letter-spacing: 0.08em;">Valid</div>
+      </div>
+    </div>
+    <div class="col-6 col-sm-3">
+      <div class="card bg-warning-subtle border-warning text-center py-3">
+        <div class="fs-3 fw-bold text-warning">{{ counts.warning }}</div>
+        <div class="text-uppercase text-secondary small" style="letter-spacing: 0.08em;">Warning</div>
+      </div>
+    </div>
+    <div class="col-6 col-sm-3">
+      <div class="card bg-danger-subtle border-danger text-center py-3">
+        <div class="fs-3 fw-bold text-danger">{{ counts.rejected }}</div>
+        <div class="text-uppercase text-secondary small" style="letter-spacing: 0.08em;">Rejected</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <form method="post" action="{% url 'assetreview:review' %}" class="d-flex align-items-center flex-wrap gap-2 mb-4">
+    {% csrf_token %}
+    <span class="text-uppercase text-secondary fw-semibold small me-1" style="letter-spacing: 0.08em;">Filter:</span>
+    {% for f in valid_filters %}
+      <button type="submit" name="filter" value="{{ f }}"
+              class="btn btn-sm {% if f == current_filter %}btn-primary{% else %}btn-outline-secondary{% endif %} rounded-pill">
+        {{ f|capfirst }}{% if f != 'all' %} ({{ counts|dictsort:f }}){% endif %}
+      </button>
+    {% endfor %}
+  </form>
+
+  <!-- Preview Table -->
+  {% if rows %}
+    <div class="table-responsive rounded-3 border border-secondary">
+      <table class="table table-dark table-hover table-bordered align-middle mb-0">
+        <thead class="table-secondary text-uppercase small" style="letter-spacing: 0.06em;">
+          <tr>
+            <th>#</th>
+            <th>Asset Code</th>
+            <th>Day No</th>
+            <th>Asset Type</th>
+            <th>Filename</th>
+            <th>Status</th>
+            <th>Issues</th>
+            <th>Re-validate</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+          <tr data-row-num="{{ row.row_num }}">
+            <td class="text-secondary">{{ row.row_num }}</td>
+            <td>{{ row.asset_code|default:"—" }}</td>
+            <td>{{ row.day_no|default:"—" }}</td>
+            <td>{{ row.asset_type|default:"—" }}</td>
+            <td>{{ row.filename|default:"—" }}</td>
+            <td>
+              {% if row.status == 'valid' %}
+                <span class="badge bg-success">valid</span>
+              {% elif row.status == 'warning' %}
+                <span class="badge bg-warning text-dark">warning</span>
+              {% else %}
+                <span class="badge bg-danger">rejected</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if row.errors %}
+                <ul class="mb-0 ps-3" style="font-size: 0.78rem;">
+                  {% for err in row.errors %}
+                    <li class="text-danger">{{ err }}</li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <span class="text-secondary">—</span>
+              {% endif %}
+            </td>
+            <td>
+              <button class="btn btn-sm btn-outline-info btn-validate"
+                      data-asset-code="{{ row.asset_code }}"
+                      data-day-no="{{ row.day_no }}"
+                      data-asset-type="{{ row.asset_type }}"
+                      data-filename="{{ row.filename }}">
+                <i class="bi bi-check2-circle me-1"></i>Validate
+              </button>
+              <span class="ajax-result ms-1" style="font-size: 0.8rem;"></span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  {% else %}
+    <div class="text-center py-5 text-secondary">
+      <i class="bi bi-search fs-1 d-block mb-3"></i>
+      <p class="fs-6">No rows match the <strong class="text-light">{{ current_filter }}</strong> filter.</p>
+    </div>
+  {% endif %}
+
+  <script>
+    window.VALIDATE_URL = "{% url 'assetreview:validate_row' %}";
+    window.CSRF_TOKEN   = "{{ csrf_token }}";
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'assetreview/preview.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+[
+  {
+    "asset_code": "INTRO-001",
+    "day_no": "1",
+    "asset_type": "video",
+    "filename": "intro_welcome.mp4",
+    "row_num": 2,
+    "status": "valid",
+    "errors": []
+  },
+  {
+    "asset_code": "INTRO-002",
+    "day_no": "1",
+    "asset_type": "pdf",
+    "filename": "course_overview.pdf",
+    "row_num": 3,
+    "status": "valid",
+    "errors": []
+  },
+  {
+    "asset_code": "DAY2-003",
+    "day_no": "2",
+    "asset_type": "quiz",
+    "filename": "day2_quiz.json",
+    "row_num": 4,
+    "status": "valid",
+    "errors": []
+  },
+  {
+    "asset_code": "DAY2-004",
+    "day_no": "2",
+    "asset_type": "image",
+    "filename": "diagram_circulatory.png",
+    "row_num": 5,
+    "status": "valid",
+    "errors": []
+  },
+  {
+    "asset_code": "DAY3-005",
+    "day_no": "3",
+    "asset_type": "audio",
+    "filename": "lecture_day3.mp3",
+    "row_num": 6,
+    "status": "valid",
+    "errors": []
+  },
+  {
+    "asset_code": "DAY3-006",
+    "day_no": "3",
+    "asset_type": "video",
+    "filename": "lab_demo.mp4",
+    "row_num": 7,
+    "status": "valid",
+    "errors": []
+  },
+  {
+    "asset_code": "ORPHAN-007",
+    "day_no": "4",
+    "asset_type": "spreadsheet",
+    "filename": "budget.xlsx",
+    "row_num": 8,
+    "status": "warning",
+    "errors": [
+      "asset_type \"spreadsheet\" is not in known types (audio, image, pdf, quiz, video)"
+    ]
+  },
+  {
+    "asset_code": "BADROW-008",
+    "day_no": "",
+    "asset_type": "pdf",
+    "filename": "missing_day.pdf",
+    "row_num": 9,
+    "status": "rejected",
+    "errors": [
+      "day_no is empty"
+    ]
+  },
+  {
+    "asset_code": "BADROW-009",
+    "day_no": "abc",
+    "asset_type": "video",
+    "filename": "non_numeric_day.mp4",
+    "row_num": 10,
+    "status": "rejected",
+    "errors": [
+      "day_no \"abc\" is not an integer"
+    ]
+  },
+  {
+    "asset_code": "BADROW-010",
+    "day_no": "5",
+    "asset_type": "",
+    "filename": "no_type.mp4",
+    "row_num": 11,
+    "status": "rejected",
+    "errors": [
+      "asset_type is empty"
+    ]
+  },
+  {
+    "asset_code": "BADROW-011",
+    "day_no": "6",
+    "asset_type": "video",
+    "filename": "",
+    "row_num": 12,
+    "status": "rejected",
+    "errors": [
+      "filename is empty"
+    ]
+  },
+  {
+    "asset_code": "",
+    "day_no": "7",
+    "asset_type": "pdf",
+    "filename": "no_code.pdf",
+    "row_num": 13,
+    "status": "rejected",
+    "errors": [
+      "asset_code is empty"
+    ]
+  },
+  {
+    "asset_code": "DAY4-012",
+    "day_no": "4",
+    "asset_type": "video",
+    "filename": "ethics_lecture.mp4",
+    "row_num": 14,
+    "status": "valid",
+    "errors": []
+  }
+]

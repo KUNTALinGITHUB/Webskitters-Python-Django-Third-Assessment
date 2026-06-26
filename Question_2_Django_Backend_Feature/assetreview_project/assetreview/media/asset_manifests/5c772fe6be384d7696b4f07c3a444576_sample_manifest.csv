@@ -1,0 +1,14 @@
+asset_code,day_no,asset_type,filename
+INTRO-001,1,video,intro_welcome.mp4
+INTRO-002,1,pdf,course_overview.pdf
+DAY2-003,2,quiz,day2_quiz.json
+DAY2-004,2,image,diagram_circulatory.png
+DAY3-005,3,audio,lecture_day3.mp3
+DAY3-006,3,video,lab_demo.mp4
+ORPHAN-007,4,spreadsheet,budget.xlsx
+BADROW-008,,pdf,missing_day.pdf
+BADROW-009,abc,video,non_numeric_day.mp4
+BADROW-010,5,,no_type.mp4
+BADROW-011,6,video,
+,7,pdf,no_code.pdf
+DAY4-012,4,video,ethics_lecture.mp4

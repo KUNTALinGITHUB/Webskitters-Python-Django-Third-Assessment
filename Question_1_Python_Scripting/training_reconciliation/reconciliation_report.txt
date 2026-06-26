@@ -1,0 +1,69 @@
+============================================================
+       TRAINING ASSET RECONCILIATION REPORT
+============================================================
+
+SUMMARY
+------------------------------------------------------------
+  Total rows in manifest        : 8
+  Valid rows                    : 6
+  Invalid rows                  : 2
+  Warnings (day > 30)          : 0
+  Missing files (in CSV, no file): 3
+  Orphan files  (file, not CSV) : 1
+  Matched files                 : 3
+  Duplicate asset codes         : 1
+  Conflicting filenames         : 0
+  Deployment-ready assets       : 2
+
+INVALID ROWS
+------------------------------------------------------------
+  Row 5: {'asset_code': 'BAD3', 'day_no': '31', 'asset_type': 'js', 'filename': 'ajax.js', 'owner_email': 'mentor.company.com', 'tags': 'ajax'}
+    Reason: Asset code 'BAD3' is invalid. Must be A- followed by exactly 3 digits.; Invalid email 'mentor.company.com'.
+  Row 7: {'asset_code': 'A-005', 'day_no': '45', 'asset_type': 'video', 'filename': 'intro.mp4', 'owner_email': 'admin@company.com', 'tags': 'intro'}
+    Reason: day_no 45 is outside allowed range 1–40.
+
+WARNINGS
+------------------------------------------------------------
+  None.
+
+MISSING FILES  (referenced in manifest but not found in assets/)
+------------------------------------------------------------
+  - banner.png
+  - profile.png
+  - utils.js
+
+ORPHAN FILES  (present in assets/ but not in manifest)
+------------------------------------------------------------
+  - intro.mp4
+
+DUPLICATE ASSET CODES
+------------------------------------------------------------
+  Code: A-002
+    → profile.png (day 26)
+    → profile_copy.png (day 26)
+
+CONFLICTING FILENAMES
+------------------------------------------------------------
+  None.
+
+ASSETS GROUPED BY DAY AND TYPE
+------------------------------------------------------------
+  Day 5:
+    [js] → utils.js
+  Day 10:
+    [image] → banner.png
+  Day 18:
+    [csv] → students.csv
+  Day 24:
+    [css] → main.css
+  Day 26:
+    [image] → profile.png, profile_copy.png
+
+DEPLOYMENT-READY ASSETS
+------------------------------------------------------------
+  A-004 | Day 18 | csv | students.csv
+  A-001 | Day 24 | css | main.css
+
+============================================================
+END OF REPORT
+============================================================

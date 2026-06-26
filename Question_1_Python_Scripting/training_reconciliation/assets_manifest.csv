@@ -1,0 +1,9 @@
+asset_code,day_no,asset_type,filename,owner_email,tags
+A-001,24,css,main.css,mentor@company.com,static|style
+A-002,26,image,profile.png,mentor@company.com,media|upload
+A-002,26,image,profile_copy.png,mentor@company.com,duplicate
+BAD3,31,js,ajax.js,mentor.company.com,ajax
+A-004,18,csv,students.csv,ops@company.com,input|report
+A-005,45,video,intro.mp4,admin@company.com,intro
+A-006,10,image,banner.png,ops@company.com,banner|header|theme
+A-007,5,js,utils.js,dev@company.com,helper
